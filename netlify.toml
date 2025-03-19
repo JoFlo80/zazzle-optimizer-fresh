@@ -1,0 +1,32 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "18.20.3"
+  NPM_VERSION = "10.2.4"
+
+[dev]
+  functions = "netlify/functions"
+  command = "npm run dev"
+  port = 8888
+  targetPort = 3000
+  framework = "vite"
+  autoLaunch = false
+  publish = "dist"
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["@netlify/functions", "update-notifier", "envinfo", "fastest-levenshtein", "inquirer", "decache"]
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://api.openai.com/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
